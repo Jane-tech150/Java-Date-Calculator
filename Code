@@ -1,0 +1,79 @@
+import java.util.*;
+public class date3
+{
+    public static boolean isLeap(int y)
+    {
+        if(y%4==0 && y%100!=0 || y%400==0)
+          return true;
+        return false;
+    }
+    public static void main(String args[])
+    {
+        Scanner in = new Scanner(System.in);
+        boolean valid_dayNum=true;
+        boolean valid_n=true;
+        System.out.println("Enter day number");
+        int dayNum=Integer.parseInt(in.nextLine());
+        System.out.println("Enter year");
+        int year=Integer.parseInt(in.nextLine());
+        System.out.println("Enter n");
+        int n=Integer.parseInt(in.nextLine());
+        if(dayNum<1 || dayNum>365 && !isLeap(year))
+        {
+            System.out.println("Incorrect input");
+            valid_dayNum=false;
+        }
+        if(dayNum<1 || dayNum>366 && isLeap(year))
+        {
+            System.out.println("Incorrect input");
+            valid_dayNum=false;
+        }
+        if(n<1 || n>100)
+        {
+            System.out.println("Incorrect input");
+            valid_n=false;
+        }
+        if(!valid_dayNum || !valid_n)
+        return;
+        int day[]={31,28,31,30,31,30,31,31,30,31,30,31};
+        String month[]={"January","February","March","April","May","June","July","August","September","October","November","December"};
+        int index=0;
+        if(isLeap(year))
+        day[1]=29;
+        while(dayNum>day[index])
+        {
+            dayNum-=day[index++];
+            if(index==12)
+            {
+                index=0;
+                year++;
+                if(isLeap(year))
+                day[1]=29;
+                else
+                day[1]=28;
+            }
+        }
+        System.out.println("The date: "+dayNum+" "+month[index]+", "+year);
+        int nn=n;
+        while(n>0)
+        {
+            dayNum++;
+            n--;
+            if(dayNum>day[index])
+            {
+                dayNum=1;
+                index++;
+                if(index==12)
+                {
+                        index=0;
+                        year++;
+                        if(isLeap(year))
+                        day[1]=29;
+                        else
+                        day[1]=28;
+                }
+            }
+        }
+        System.out.println("The date after "+nn+" days: "+dayNum+" "+month[index]+", "+year);
+    }
+}
